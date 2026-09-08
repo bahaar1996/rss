@@ -5,7 +5,7 @@ import { PlusOutlined, SearchOutlined } from "@ant-design/icons";
 
 const Header = () => {
   return (
-    <div className="flex justify-between">
+    <div className="flex justify-between border-b border-zinc-200 py-6">
       <div className="flex gap-6">
         <div className="flex gap-2">
           <div className="h-7 w-7 bg-blue-600 flex justify-center items-center rounded text-white font-bold">
