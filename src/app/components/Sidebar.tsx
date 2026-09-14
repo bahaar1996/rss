@@ -56,7 +56,7 @@ const totalFeed = [
 
 const Sidebar = () => {
   return (
-    <div className="sticky top-14 w-65 space-y-4 bg-zinc-50 p-4">
+    <div className="sticky top-20  h-[calc(100vh_-_3.5rem)] shrink-0 w-65 space-y-4 bg-zinc-50 p-4">
       <div className="border-b border-zinc-200">
         {totalFeed.map((item) => (
           <Link
