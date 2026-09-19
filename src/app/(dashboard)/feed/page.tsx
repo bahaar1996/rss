@@ -1,11 +1,15 @@
+import FeedToolbar from "@/app/components/FeedToolbar";
+import { getAllItems } from "@/lib/rss/getAllItems";
 import { getFeed } from "@/lib/rss/parser";
 
 export default async function FeedPage() {
   const feed = await getFeed("https://css-tricks.com/feed/");
-
+  const items = await getAllItems();
+  console.log("item page", items);
   return (
     <main className="p-6">
       {/* Feed Header */}
+      <FeedToolbar />
       <div className="mb-8 flex items-center gap-3">
         {feed.image?.url && (
           <img
