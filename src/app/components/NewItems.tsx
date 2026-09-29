@@ -17,7 +17,7 @@ const NewItems = ({ items }) => {
 
     localStorage.setItem("feed-last-visit", new Date().toISOString());
   }, []);
-  const newItems = items.filter((item) => {
+  const newItems = items?.filter((item) => {
     if (!item.isoDate || !lastVisit) return false;
     return new Date(item.pubDate) > new Date(lastVisit);
   });

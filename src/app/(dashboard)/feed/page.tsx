@@ -11,7 +11,7 @@ export default async function FeedPage() {
   return (
     <div>
       <FeedToolbar />
-      <NewItems items={feed.items} />
+      <NewItems items={items} />
       <main className="p-6">
         <div className="mb-8 flex items-center gap-3">
           {feed.image?.url && (
@@ -33,7 +33,7 @@ export default async function FeedPage() {
         </div>
 
         {/* Articles */}
-        <FeedList feed={feed} />
+        <FeedList items={items} />
       </main>
     </div>
   );

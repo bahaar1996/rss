@@ -1,8 +1,8 @@
 "use client";
-const FeedList = ({ feed }) => {
+const FeedList = ({ items }) => {
   return (
     <div className="space-y-4">
-      {feed.items.map((item) => (
+      {items?.map((item) => (
         <article
           key={item.guid ?? item.link}
           className="rounded-lg border border-zinc-200 bg-white p-5"

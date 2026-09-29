@@ -11,8 +11,19 @@ export async function getAllItems() {
     .map((result) => result.value);
 
   const items = successfulFeeds.flatMap((feed) => feed.items);
-  return items.sort(
-    (a, b) =>
-      new Date(b.isoDate ?? 0).getTime() - new Date(a.isoDate ?? 0).getTime(),
-  );
+  return items
+    .map((item) => ({
+      title: item.title ?? "",
+      link: item.link ?? "",
+      guid: item.guid ?? item.link ?? "",
+      creator: item.creator ?? "",
+      pubDate: item.pubDate ?? "",
+      isoDate: item.isoDate ?? "",
+      contentSnippet: item.contentSnippet ?? "",
+      categories: item.categories ?? [],
+    }))
+    .sort(
+      (a, b) =>
+        new Date(b.isoDate ?? 0).getTime() - new Date(a.isoDate ?? 0).getTime(),
+    );
 }
