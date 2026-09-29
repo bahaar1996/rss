@@ -10,7 +10,7 @@ import { Button } from "antd";
 
 const FeedToolbar = () => {
   return (
-    <div className="flex justify-between mt-1">
+    <div className="flex justify-between px-4 py-6 border-b border-zinc-200">
       <div className="flex gap-2">
         <span className="font-bold">All Items</span>
         <span className="text-zinc-400">47 unread</span>
