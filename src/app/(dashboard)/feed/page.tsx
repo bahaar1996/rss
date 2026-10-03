@@ -13,7 +13,7 @@ export default async function FeedPage() {
       <FeedToolbar />
       <NewItems items={items} />
       <main className="p-6">
-        <div className="mb-8 flex items-center gap-3">
+        {/* <div className="mb-8 flex items-center gap-3">
           {feed.image?.url && (
             <img
               src={feed.image.url}
@@ -30,7 +30,7 @@ export default async function FeedPage() {
               <p className="text-sm text-zinc-500">{feed.description}</p>
             )}
           </div>
-        </div>
+        </div> */}
 
         {/* Articles */}
         <FeedList items={items} />

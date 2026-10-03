@@ -1,8 +1,6 @@
-"use client";
-
-import { BookOutlined, CheckCircleOutlined } from "@ant-design/icons";
-import Link from "next/link";
 import sampleFeedJson from "@/data/sample-feeds.json";
+import { getAllItems } from "@/lib/rss/getAllItems";
+import Link from "next/link";
 
 const categoryColors: Record<string, string> = {
   Frontend: "bg-blue-500",
@@ -41,20 +39,19 @@ const totalFeed = [
   {
     icon: "▤",
     name: "All Items",
-    count: 47,
     href: "/feed",
     active: true,
   },
   {
     icon: "♡",
     name: "Saved",
-    count: 12,
     href: "/saved",
     active: false,
   },
 ];
 
-const Sidebar = () => {
+const Sidebar = async () => {
+  const items = await getAllItems();
   return (
     <div className="sticky top-20  h-[calc(100vh_-_3.5rem)] shrink-0 w-65 space-y-4 bg-zinc-50 p-4">
       <div className="border-b border-zinc-200">
@@ -73,7 +70,7 @@ const Sidebar = () => {
               <span>{item.name}</span>
             </div>
 
-            <span>{item.count}</span>
+            <span>{items.length}</span>
           </Link>
         ))}
       </div>
@@ -126,7 +123,7 @@ const Sidebar = () => {
       </section>
 
       <div className="border-t border-zinc-200 pt-4">
-        <CheckCircleOutlined className="mr-3 !text-emerald-500" />
+        <span className="mr-3 text-emerald-500">✓</span>
         <span className="text-zinc-600">All feeds healty</span>
       </div>
     </div>
