@@ -1,5 +1,14 @@
+"use client";
+
+import { useEffect, useState } from "react";
+
 const SavedPage = () => {
-  return <div>hi</div>;
+  const [savedItems, setSavedItems] = useState([]);
+  useEffect(() => {
+    const saved = JSON.parse(localStorage.getItem("savedItem") || "[]");
+    console.log("saved", saved);
+  }, []);
+  return <div></div>;
 };
 
 export default SavedPage;
