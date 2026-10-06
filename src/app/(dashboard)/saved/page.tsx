@@ -1,14 +1,15 @@
-"use client";
+import SavedList from "@/app/components/SavedList";
+import { getAllItems } from "@/lib/rss/getAllItems";
 
-import { useEffect, useState } from "react";
-
-const SavedPage = () => {
-  const [savedItems, setSavedItems] = useState([]);
-  useEffect(() => {
-    const saved = JSON.parse(localStorage.getItem("savedItem") || "[]");
-    console.log("saved", saved);
-  }, []);
-  return <div></div>;
+const SavedPage = async () => {
+  const items = await getAllItems();
+  return (
+    <>
+      <main className="p-6">
+        <SavedList items={items} />
+      </main>
+    </>
+  );
 };
 
 export default SavedPage;

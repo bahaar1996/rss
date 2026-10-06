@@ -50,6 +50,7 @@ const totalFeed = [
 ];
 const SidebarNavigation = ({ items }) => {
   const pathname = usePathname();
+  const savedItems = JSON.parse(localStorage.getItem("savedItem") || "[]");
 
   return (
     <div>
@@ -71,8 +72,9 @@ const SidebarNavigation = ({ items }) => {
                   <span>{item.icon}</span>
                   <span>{item.name}</span>
                 </div>
-
-                <span>{items.length}</span>
+                <span>
+                  {item.href === "/feed" ? items.length : savedItems.length}
+                </span>
               </Link>
             );
           })}

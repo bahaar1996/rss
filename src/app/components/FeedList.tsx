@@ -1,10 +1,14 @@
 "use client";
 
 import { StarFilled, StarOutlined } from "@ant-design/icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 const FeedList = ({ items }) => {
   const [savedItems, setSavedItems] = useState<string[]>([]);
 
+  useEffect(() => {
+    const savedItems = JSON.parse(localStorage.getItem("savedItem") || "[]");
+    setSavedItems(savedItems);
+  }, []);
   const handleToggleSave = (guid: string) => {
     setSavedItems((prev) => {
       if (prev.includes(guid)) {
@@ -19,7 +23,7 @@ const FeedList = ({ items }) => {
   return (
     <div className="space-y-4">
       {items?.map((item) => {
-        const isSaved = savedItems.includes(item.guid ?? "");
+        const isSaved = savedItems.includes(item.guid);
         return (
           <article
             key={item.guid ?? item.link}
