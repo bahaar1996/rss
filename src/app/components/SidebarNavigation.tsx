@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import sampleFeedJson from "@/data/sample-feeds.json";
+import { useEffect, useState } from "react";
 const categoryColors: Record<string, string> = {
   Frontend: "bg-blue-500",
   Design: "bg-pink-500",
@@ -50,7 +51,11 @@ const totalFeed = [
 ];
 const SidebarNavigation = ({ items }) => {
   const pathname = usePathname();
-  const savedItems = JSON.parse(localStorage.getItem("savedItem") || "[]");
+  const [savedItems, setSavedItems] = useState<string[]>([]);
+  useEffect(() => {
+    const saved = JSON.parse(localStorage.getItem("savedItem") || "[]");
+    setSavedItems(saved || "[]");
+  }, []);
 
   return (
     <div>
