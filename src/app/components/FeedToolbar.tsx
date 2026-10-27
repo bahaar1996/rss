@@ -7,8 +7,28 @@ import {
   UnorderedListOutlined,
 } from "@ant-design/icons";
 import { Button } from "antd";
+import { useRouter } from "next/navigation";
+import { useState, useTransition } from "react";
 
-const FeedToolbar = () => {
+const FeedToolbar = ({ handleMarkAllRead }) => {
+  const [isPending, startTransition] = useTransition();
+  const router = useRouter();
+  // function handleRefreshing() {
+  //   setIsRefreshing(true);
+  //   try {
+  //     router.refresh();
+  //   } catch (error) {
+  //     setIsRefreshing(false);
+  //     throw error;
+  //   } finally {
+  //     setIsRefreshing(false);
+  //   }
+  // }
+  const handleRefreshing = () => {
+    startTransition(() => {
+      router.refresh();
+    });
+  };
   return (
     <div className="flex justify-between px-4 py-6 border-b border-zinc-200">
       <div className="flex gap-2">
@@ -37,9 +57,15 @@ const FeedToolbar = () => {
         <div className="flex gap-2">
           <Button icon={<FilterOutlined />}>Newest</Button>
 
-          <Button icon={<ReloadOutlined />}>Refresh</Button>
+          <Button
+            onClick={handleRefreshing}
+            icon={<ReloadOutlined />}
+            loading={isPending}
+          >
+            Refresh
+          </Button>
 
-          <Button>Mark all read</Button>
+          <Button onClick={handleMarkAllRead}>Mark all read</Button>
         </div>
       </div>
     </div>

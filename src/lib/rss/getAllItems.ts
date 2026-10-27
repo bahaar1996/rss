@@ -2,6 +2,7 @@ import { getFeed } from "./parser";
 import feedsData from "@/data/sample-feeds.json";
 
 export async function getAllItems() {
+  console.log("get all items2");
   const feeds = feedsData.categories.flatMap((category) => category.feeds);
   const results = await Promise.allSettled(
     feeds.map((feed) => getFeed(feed.feedUrl)),

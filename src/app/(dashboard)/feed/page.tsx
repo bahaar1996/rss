@@ -1,6 +1,4 @@
-import FeedList from "@/app/components/FeedList";
-import FeedToolbar from "@/app/components/FeedToolbar";
-import NewItems from "@/app/components/NewItems";
+import FeedContent from "@/app/components/FeedContent";
 import { getAllItems } from "@/lib/rss/getAllItems";
 import { getFeed } from "@/lib/rss/parser";
 
@@ -10,11 +8,7 @@ export default async function FeedPage() {
   console.log("item page", items);
   return (
     <div>
-      <FeedToolbar />
-      <NewItems items={items} />
-      <main className="p-6">
-        <FeedList items={items} />
-      </main>
+      <FeedContent items={items} />
     </div>
   );
 }

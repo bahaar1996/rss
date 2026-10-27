@@ -2,12 +2,11 @@
 
 import { StarFilled, StarOutlined } from "@ant-design/icons";
 import { useEffect, useState } from "react";
-const FeedList = ({ items }) => {
+const FeedList = ({ items, readItems }) => {
   const [savedItems, setSavedItems] = useState<string[]>([]);
-
   useEffect(() => {
-    const savedItems = JSON.parse(localStorage.getItem("savedItem") || "[]");
-    setSavedItems(savedItems);
+    const saved = JSON.parse(localStorage.getItem("savedItem") || "[]");
+    setSavedItems(saved);
   }, []);
   const handleToggleSave = (guid: string) => {
     setSavedItems((prev) => {
@@ -20,10 +19,13 @@ const FeedList = ({ items }) => {
       return [...prev, guid];
     });
   };
+
   return (
     <div className="space-y-4">
       {items?.map((item) => {
         const isSaved = savedItems.includes(item.guid);
+        const isRead = readItems.includes(item.guid);
+        console.log("is read", isRead);
         return (
           <article
             key={item.guid ?? item.link}
@@ -45,7 +47,7 @@ const FeedList = ({ items }) => {
                 href={item.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-lg font-semibold text-zinc-900 hover:text-blue-600"
+                className={`text-lg  ${isRead ? "font-normal text-zinc-500" : "font-semibold text-zinc-900"} hover:text-blue-600`}
               >
                 {item.title}
               </a>
