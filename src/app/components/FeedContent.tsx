@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 
 const FeedContent = ({ items }) => {
   const [readItems, setReadItems] = useState<string[]>([]);
-
+  const [sortBy, setSortBy] = useState("newest");
   useEffect(() => {
     const read = JSON.parse(localStorage.getItem("readItem") || "[]");
     setReadItems(read);
@@ -23,10 +23,14 @@ const FeedContent = ({ items }) => {
   };
   return (
     <div>
-      <FeedToolbar handleMarkAllRead={handleMarkAllRead} />
+      <FeedToolbar
+        handleMarkAllRead={handleMarkAllRead}
+        sortBy={sortBy}
+        onSortChange={setSortBy}
+      />
       <NewItems items={items} />
       <main className="p-6">
-        <FeedList items={items} readItems={readItems} />
+        <FeedList items={items} readItems={readItems} sortBy={sortBy} />
       </main>
     </div>
   );

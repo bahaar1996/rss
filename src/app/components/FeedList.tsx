@@ -2,7 +2,7 @@
 
 import { StarFilled, StarOutlined } from "@ant-design/icons";
 import { useEffect, useState } from "react";
-const FeedList = ({ items, readItems }) => {
+const FeedList = ({ items, readItems, sortBy }) => {
   const [savedItems, setSavedItems] = useState<string[]>([]);
   useEffect(() => {
     const saved = JSON.parse(localStorage.getItem("savedItem") || "[]");
@@ -19,10 +19,21 @@ const FeedList = ({ items, readItems }) => {
       return [...prev, guid];
     });
   };
+  const sortedItems = [...items].sort((a, b) => {
+    const dateA = new Date(a.isoDate).getTime();
+    const dateB = new Date(b.isoDate).getTime();
 
+    if (sortBy === "newest") {
+      return dateB - dateA;
+    } else if (sortBy === "oldest") {
+      return dateA - dateB;
+    } else {
+      return 0;
+    }
+  });
   return (
     <div className="space-y-4">
-      {items?.map((item) => {
+      {sortedItems?.map((item) => {
         const isSaved = savedItems.includes(item.guid);
         const isRead = readItems.includes(item.guid);
         console.log("is read", isRead);

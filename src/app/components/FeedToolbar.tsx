@@ -6,29 +6,19 @@ import {
   ReloadOutlined,
   UnorderedListOutlined,
 } from "@ant-design/icons";
-import { Button } from "antd";
+import { Button, Dropdown } from "antd";
 import { useRouter } from "next/navigation";
-import { useState, useTransition } from "react";
+import { useTransition } from "react";
 
-const FeedToolbar = ({ handleMarkAllRead }) => {
+const FeedToolbar = ({ handleMarkAllRead, sortBy, onSortChange }) => {
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
-  // function handleRefreshing() {
-  //   setIsRefreshing(true);
-  //   try {
-  //     router.refresh();
-  //   } catch (error) {
-  //     setIsRefreshing(false);
-  //     throw error;
-  //   } finally {
-  //     setIsRefreshing(false);
-  //   }
-  // }
   const handleRefreshing = () => {
     startTransition(() => {
       router.refresh();
     });
   };
+
   return (
     <div className="flex justify-between px-4 py-6 border-b border-zinc-200">
       <div className="flex gap-2">
@@ -55,7 +45,19 @@ const FeedToolbar = ({ handleMarkAllRead }) => {
           />
         </div>
         <div className="flex gap-2">
-          <Button icon={<FilterOutlined />}>Newest</Button>
+          <Dropdown
+            menu={{
+              items: [
+                { key: "newest", label: "Newest first" },
+                { key: "oldest", label: "Oldest first" },
+              ],
+              onClick: ({ key }) => onSortChange(key),
+            }}
+            trigger={["click"]}
+            placement="bottomRight"
+          >
+            <Button icon={<FilterOutlined />}>{sortBy}</Button>
+          </Dropdown>
 
           <Button
             onClick={handleRefreshing}
