@@ -1,8 +1,9 @@
 "use client";
 
+import { ViewMode } from "@/app/components/FeedContent";
 import { StarFilled, StarOutlined } from "@ant-design/icons";
 import { useEffect, useState } from "react";
-const FeedList = ({ items, readItems, sortBy }) => {
+const FeedList = ({ items, readItems, sortBy, viewMode }) => {
   const [savedItems, setSavedItems] = useState<string[]>([]);
   useEffect(() => {
     const saved = JSON.parse(localStorage.getItem("savedItem") || "[]");
@@ -19,7 +20,7 @@ const FeedList = ({ items, readItems, sortBy }) => {
       return [...prev, guid];
     });
   };
-  const sortedItems = [...items].sort((a, b) => {
+  const sortedItems = items.toSorted((a, b) => {
     const dateA = new Date(a.isoDate).getTime();
     const dateB = new Date(b.isoDate).getTime();
 
@@ -31,19 +32,22 @@ const FeedList = ({ items, readItems, sortBy }) => {
       return 0;
     }
   });
+  console.log("my view", viewMode);
   return (
-    <div className="space-y-4">
+    <div
+      className={`${viewMode === ViewMode.gridView ? "flex flex-wrap justify-between" : "block"} space-y-4`}
+    >
       {sortedItems?.map((item) => {
         const isSaved = savedItems.includes(item.guid);
         const isRead = readItems.includes(item.guid);
-        console.log("is read", isRead);
         return (
           <article
             key={item.guid ?? item.link}
-            className="rounded-lg border border-zinc-200 bg-white p-5 max-w-300 w-full"
+            className={`${viewMode === ViewMode.gridView ? "w-70 min-h-70" : "max-w-300"} border border-zinc-200 rounded-lg bg-white p-5 `}
           >
             {/* Title */}
             <div className="flex gap-2">
+              {viewMode === ViewMode.compactListView && <span>•</span>}
               <button
                 type="button"
                 onClick={() => handleToggleSave(item.guid ?? "")}

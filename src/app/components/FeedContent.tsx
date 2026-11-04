@@ -5,9 +5,15 @@ import FeedToolbar from "@/app/components/FeedToolbar";
 import NewItems from "@/app/components/NewItems";
 import { useEffect, useState } from "react";
 
+export enum ViewMode {
+  listView = "listView",
+  gridView = "gridView",
+  compactListView = "compactListView",
+}
 const FeedContent = ({ items }) => {
   const [readItems, setReadItems] = useState<string[]>([]);
   const [sortBy, setSortBy] = useState("newest");
+  const [viewMode, setViewMode] = useState(ViewMode.listView);
   useEffect(() => {
     const read = JSON.parse(localStorage.getItem("readItem") || "[]");
     setReadItems(read);
@@ -21,16 +27,24 @@ const FeedContent = ({ items }) => {
       return updated;
     });
   };
+
   return (
     <div>
       <FeedToolbar
         handleMarkAllRead={handleMarkAllRead}
         sortBy={sortBy}
         onSortChange={setSortBy}
+        viewMode={viewMode}
+        viewModeChange={setViewMode}
       />
       <NewItems items={items} />
       <main className="p-6">
-        <FeedList items={items} readItems={readItems} sortBy={sortBy} />
+        <FeedList
+          items={items}
+          readItems={readItems}
+          sortBy={sortBy}
+          viewMode={viewMode}
+        />
       </main>
     </div>
   );

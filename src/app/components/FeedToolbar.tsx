@@ -1,4 +1,5 @@
 "use client";
+import { ViewMode } from "@/app/components/FeedContent";
 import {
   AppstoreOutlined,
   FilterOutlined,
@@ -10,7 +11,13 @@ import { Button, Dropdown } from "antd";
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 
-const FeedToolbar = ({ handleMarkAllRead, sortBy, onSortChange }) => {
+const FeedToolbar = ({
+  handleMarkAllRead,
+  sortBy,
+  onSortChange,
+  viewMode,
+  viewModeChange,
+}) => {
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
   const handleRefreshing = () => {
@@ -18,7 +25,9 @@ const FeedToolbar = ({ handleMarkAllRead, sortBy, onSortChange }) => {
       router.refresh();
     });
   };
-
+  const handleViewMode = (mode) => {
+    viewModeChange(mode);
+  };
   return (
     <div className="flex justify-between px-4 py-6 border-b border-zinc-200">
       <div className="flex gap-2">
@@ -29,16 +38,19 @@ const FeedToolbar = ({ handleMarkAllRead, sortBy, onSortChange }) => {
       <div className="flex gap-2">
         <div className="flex rounded-lg border border-zinc-200">
           <Button
+            onClick={() => handleViewMode(ViewMode.listView)}
             type="text"
             className="border-r! border-zinc-200! rounded-r-none!"
             icon={<MenuOutlined />}
           />
           <Button
+            onClick={() => handleViewMode(ViewMode.gridView)}
             type="text"
             className="rounded-none! border-l! border-zinc-200!"
             icon={<AppstoreOutlined />}
           />
           <Button
+            onClick={() => handleViewMode(ViewMode.compactListView)}
             type="text"
             className="rounded-l-none! rounded-r-lg! border-l! border-zinc-200!"
             icon={<UnorderedListOutlined />}
