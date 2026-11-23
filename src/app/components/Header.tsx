@@ -1,9 +1,37 @@
 "use client";
 
-import { Avatar, Button, Input } from "antd";
 import { PlusOutlined, SearchOutlined } from "@ant-design/icons";
+import { Avatar, Button, Input } from "antd";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
 const Header = () => {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const [searchQuery, setSearchQuery] = useState(searchParams.get("q") ?? "");
+  const handleSearch = (value: string) => {
+    setSearchQuery(value);
+  };
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      const params = new URLSearchParams(searchParams.toString());
+
+      if (searchQuery.trim()) {
+        params.set("q", searchQuery);
+      } else {
+        params.delete("q");
+      }
+
+      const queryString = params.toString();
+
+      router.replace(queryString ? `${pathname}?${queryString}` : pathname, {
+        scroll: false,
+      });
+    }, 300);
+    return () => clearTimeout(timeout);
+  }, [searchQuery, pathname, router, searchParams]);
   return (
     <div className="sticky h-20 top-0 flex justify-between border-b border-zinc-200 py-6 bg-white">
       <div className="flex gap-6">
@@ -22,6 +50,8 @@ const Header = () => {
 
       <div className="flex gap-2">
         <Input
+          value={searchQuery}
+          onChange={(e) => handleSearch(e.target.value)}
           suffix={
             <span className="text-xs text-[#999] border border-[#d9d9d9] rounded px-1">
               /
